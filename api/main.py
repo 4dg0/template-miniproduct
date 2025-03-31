@@ -9,11 +9,13 @@ from src.config import env, scheduler, pb
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # STARTUP
-    logfire.configure(token=env.logfire_token, environment=env.logfire_env)
+    logfire.configure(
+        token=env.logfire_token, environment=env.logfire_env, service_name="api"
+    )
     logfire.info("Starting the app")
 
     await pb.login()
-    logfire.info("PocketBase login successful")
+    logfire.info("PocketBase login successful", ok=True)
     scheduler.start()
 
     yield
