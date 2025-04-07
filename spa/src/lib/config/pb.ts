@@ -11,14 +11,14 @@ function initUserProvider() {
 
 const store = new AsyncAuthStore({
 	save: async (serialized: string) => {
-		await localStorage.set({
+		localStorage.set({
 			key: 'pb_auth',
 			value: serialized
 		});
 	},
 	initial: initUserProvider(),
 	clear: async () => {
-		await localStorage.removeItem('pb_auth');
+		localStorage.removeItem('pb_auth');
 	}
 });
 

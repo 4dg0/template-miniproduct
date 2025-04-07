@@ -1,0 +1,8 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"hello_world": "Привет, {name} из ru локали!",
+
+	"nav_home": "Главная",
+	"nav_signUp": "Регистрация",
+	"nav_signIn": "Вход"
+}

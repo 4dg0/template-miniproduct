@@ -19,7 +19,6 @@ export async function subscribeUser() {
 
 	console.log('Subscribing to user', pb.authStore.record?.id);
 	if (!pb.authStore.record) return;
-
 	userProvider.set(UserSchema.parse(pb.authStore.record));
 
 	pb.collection('users').subscribe(pb.authStore.record.id, async (e) => {

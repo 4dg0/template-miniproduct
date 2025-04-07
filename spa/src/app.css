@@ -79,6 +79,5 @@
 
 * {
 	color: var(--color-foreground);
-	border-radius: calc(var(--radius) - 0.5rem);
 	border-color: var(--color-border);
 }
