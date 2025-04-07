@@ -1,8 +1,5 @@
-from contextlib import asynccontextmanager
 import httpx
-import logfire
 
-from .batch import PBBatch
 from .collection import Collection
 
 
@@ -38,14 +35,14 @@ class PBClient:
     def collection(self, name: str):
         return Collection(self, name)
 
-    @asynccontextmanager
-    async def batch(self):
-        batch = PBBatch(self)
-        try:
-            yield batch
-        finally:
-            results = await batch.send()
-            logfire.info("Batch operations executed", results=len(results))
-
     async def close(self):
         await self._client.aclose()
+
+    # @asynccontextmanager
+    # async def batch(self):
+    #     batch = PBBatch(self)
+    #     try:
+    #         yield batch
+    #     finally:
+    #         results = await batch.send()
+    #         logfire.info("Batch operations executed", results=len(results))
