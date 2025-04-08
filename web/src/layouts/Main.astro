@@ -1,0 +1,25 @@
+---
+import Nav from '../components/widgets/Nav.astro';
+
+const { path } = Astro.props;
+---
+
+<div class="max-w-[1280px] min-h-screen mx-auto">
+  <div class="flex-1">
+    <header class="flex justify-between sticky top-0 bg-white z-10">
+      <div>TEMPLATE - by 4dgo</div>
+      <Nav path={path}/>
+      <div>
+        <button>Try Out fore Free!</button>
+      </div>
+    </header>
+    
+    <main class="p-4 h-[4000px]">
+      <slot />
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 My Website</p>
+  </footer>
+</div>

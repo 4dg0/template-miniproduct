@@ -1,0 +1,9 @@
+---
+const {path} = Astro.props;
+---
+
+<nav class="flex gap-4">
+  <a class={`flex hover:underline ${path === '/welcome' && 'font-bold'}`} href="/welcome">Welcome</a>
+  <a class={`flex hover:underline ${path === '/about' && 'font-bold'}`}  href="/about">About</a>
+  <a class={`flex hover:underline ${path === '/more' && 'font-bold'}`}  href="/more">More products</a>
+</nav>
