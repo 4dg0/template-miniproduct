@@ -1,5 +1,5 @@
-from doctest import debug
 import logging
+import os
 import stripe
 
 from contextlib import asynccontextmanager
@@ -8,27 +8,18 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.payment import payment_router
-from src.config import env, scheduler, pb, init_logger
+from src.config import *
+
+from src import startup, shutdown
 
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # STARTUP
-    init_logger()
-    logger.info("Starting the app")
-
-    await pb.login()
-    scheduler.start()
-
-    stripe.api_key = env.stripe_api_key
-
+    await startup(app)
     yield
-
-    # SHUTDOWN
-    await pb.close()
-    scheduler.shutdown()
+    await shutdown(app)
 
 
 app = FastAPI(lifespan=lifespan)
@@ -57,4 +48,8 @@ async def stripe_error_handler(request: Request, exc: stripe.error.StripeError):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=env.env == "local")
+    logger.info("Starting FastAPI server...")
+    uvicorn.run(
+        "server:app", host="0.0.0.0", port=8000, reload=os.getenv("ENV") == "local"
+    )
+    logger.info("FastAPI server started.")

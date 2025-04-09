@@ -1,15 +1,19 @@
-import logfire
+from fastapi import Request
 
 from src.pkg.pb import PBClient
 
-from .env import env
-from .sheduler import scheduler
+from .env import Env
 
 
-pb = PBClient(env.pb_url, env.pb_id, env.pb_password)
+def get_pb(request: Request) -> PBClient:
+    return request.app.state.pb
 
 
-@scheduler.scheduled_job("interval", hours=3)
-async def refresh_token():
+async def init_pb(env: Env):
+    pb = PBClient(env.pb_url, env.pb_id, env.pb_password)
+    await pb.login()
+    return pb
+
+
+async def refresh_token(pb: PBClient):
     await pb.refresh()
-    logfire.info("PocketBase token refreshed")

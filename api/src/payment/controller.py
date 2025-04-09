@@ -1,14 +1,13 @@
 # payment_router.py
-import logging
 import stripe
 from fastapi import APIRouter, Request, status
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse
 
-from src.config import pb, env
+from src.config import pb, env, get_logger
 
 from .models import *
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 payment_router = APIRouter(prefix="/payment", tags=["payment"])
 
